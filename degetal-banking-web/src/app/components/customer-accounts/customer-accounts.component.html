@@ -1,0 +1,47 @@
+<!--<h1>{{customerId}}</h1>
+{{customer | json}}-->
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h3>Customer Id: {{customerId}}</h3>
+      <h3>Customer Name: {{customer.name}}</h3>
+    </div>
+    <div class="card-body">
+      <ng-container *ngIf="account$ | async as accounts">
+        <div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>ID</th><th>Creation Date</th><th>Type</th><th class="text-end">Balance</th><th></th><th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let accountDetails of accounts">
+              <td>{{accountDetails.id}}</td>
+              <td>{{accountDetails.createdAt | date : 'dd-MM-yyyy:HH-mm'}}</td>
+              <td>{{accountDetails.type}}</td>
+              <td class="text-end">{{accountDetails.balance | number: '1.2-2'}}</td>
+              <td></td>
+              <td><button (click)="goToOperations(accountDetails.id)" class="btn btn-success">Operations</button> </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--<ul class="nav nav-pills">
+          <li class="mx-1" *ngFor="let item of [].constructor(accountDetails.totalPages); let page=index">
+            <a (click)="goToPage(page)" class="btn"
+               [ngClass]="page==currentPage?'btn-info':'btn-outline-info'">
+              {{page}}
+            </a>
+          </li>
+        </ul>-->
+      </ng-container>
+      <ng-template #errorTemplete>
+        <ng-container *ngIf="errorMessage; else loading">
+          <div class="text-danger">{{errorMessage}}</div>
+        </ng-container>
+        <ng-template #loading>Loading.....</ng-template>
+      </ng-template>
+    </div>
+  </div>
+</div>
